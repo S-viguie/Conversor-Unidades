@@ -1,5 +1,5 @@
 //Variables
-let input = prompt("Bienvenido a conversor de unidades online \nElija un numero para comenzar: \n1 - Longitud \n2 - Peso")
+let input = prompt("Bienvenido a conversor de unidades online \nElija un numero para comenzar: \n1 - Longitud \n2 - Peso \n3 - Tiempo")
 let un1 = ""
 let un2 = ""
 let unidad1 = ""
@@ -24,10 +24,14 @@ let pulgadas = new Unidad ("Pulgadas", "in", false)
 let kilogramos = new Unidad ("Kilogramos", "kg", true)
 let libras = new Unidad ("Libras", "lb", false)
 let onzas = new Unidad ("Onzas", "oz", false)
+let horas = new Unidad ("Horas", "h", false)
+let minutos = new Unidad ("Minutos", "min", false)
+let segundos = new Unidad ("Segundos", "s", true)
 
 //Arrays de unidades
 let longitudes = [metros, pies, pulgadas]
 let pesos = [kilogramos, libras, onzas]
+let tiempos = [horas, minutos, segundos]
 
 //Selección variables y valor
 do switch (input) {
@@ -39,10 +43,14 @@ do switch (input) {
         seleccionPeso ()
         inicial(seleccionPeso)
         break
+    case "3":
+        seleccionTiempo ()
+        inicial(seleccionTiempo)
+        break
     default:
         alert("Elija un número válido")
-        input = prompt("Bienvenido a conversor de unidades online \nElija un numero para comenzar: \n1 - Longitud \n2 - Peso")
-} while (input!="1" && input!="2")
+        input = prompt("Bienvenido a conversor de unidades online \nElija un numero para comenzar: \n1 - Longitud \n2 - Peso \n3 - Tiempo")
+} while (input!="1" && input!="2" && input!="3")
 
 //Funciones selección
 function seleccionLongitud () {
@@ -97,6 +105,30 @@ function seleccionPeso () {
     }
 }
 
+function seleccionTiempo () {
+    un1 = prompt("¿Qué unidad desea convertir? \n1 - Horas \n2 - Minutos \n3 - Segundos")
+    if (un1=="1") {
+        unidad1 = tiempos.find(tiempo => tiempo.nombre=="Horas")
+    } else if (un1=="2") {
+        unidad1 = tiempos.find(tiempo => tiempo.nombre=="Minutos")
+    } else {
+        unidad1 = tiempos.find(tiempo => tiempo.nombre=="Segundos")
+    }
+    un2 = prompt("¿A qué unidad desea convertir? \n1 - Horas \n2 - Minutos \n3 - Segundos")
+    if (un2=="1") {
+        unidad2 = tiempos.find(tiempo => tiempo.nombre=="Horas")
+    } else if (un2=="2") {
+        unidad2 = tiempos.find(tiempo => tiempo.nombre=="Minutos")
+    } else {
+        unidad2 = tiempos.find(tiempo => tiempo.nombre=="Segundos")
+    }
+    if ((un1=="1" && un2=="3") || (un1=="3" && un2=="1")) {
+        coef = 3600
+    } else {
+        coef = 60
+    }
+}
+
 function inicial (unidad) {
     while (un1 == un2) {
         alert("Elija unidades distintas")
@@ -122,6 +154,7 @@ function div (valor, coef) {
 switch (input) {
     case "1":
     case "2":
+    case "3":
         if (un1==1) {
             mult(valor, coef)
             }
@@ -129,7 +162,7 @@ switch (input) {
             if (un2==1) {
                 div(valor, coef)
             } else {
-                mult (valor, coef)
+                mult(valor, coef)
             }
         } 
         if (un1==3) {
