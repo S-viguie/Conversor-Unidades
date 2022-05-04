@@ -29,9 +29,9 @@ let minutos = new Unidad ("Minutos", "min", false)
 let segundos = new Unidad ("Segundos", "s", true)
 
 //Arrays de unidades
-let longitudes = [metros, pies, pulgadas]
-let pesos = [kilogramos, libras, onzas]
-let tiempos = [horas, minutos, segundos]
+const longitudes = [metros, pies, pulgadas]
+const pesos = [kilogramos, libras, onzas]
+const tiempos = [horas, minutos, segundos]
 
 //Selección variables y valor
 do switch (input) {
@@ -147,7 +147,7 @@ function mult (valor, coef) {
 }
 
 function div (valor, coef) {
-    res = valor/coef
+    res = Math.round(valor*100/coef)/100 
 }
 
 //Lógica de conversión
@@ -171,8 +171,13 @@ switch (input) {
         break
 }
 
-alert(valor+" "+unidad1.simbolo+" "+"equivale a "+res+" "+unidad2.simbolo)
+//Uso de DOM
+let subtitulo = document.querySelector("#subtitulo")
+subtitulo.innerText = `${valor+" "+unidad1.simbolo} equivalen a ${res+" "+unidad2.simbolo}` 
 
 if (unidad2.si==true) {
-    alert("Está convirtiendo a una unidad del Sistema Internacional")
+    let parrafo = document.createElement("p")
+    parrafo.className = "texto"
+    parrafo.innerText = "Está convirtiendo a una unidad del Sistema Internacional"
+    document.body.append(parrafo)
 }
