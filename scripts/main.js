@@ -1,7 +1,4 @@
 //Variables
-let input = prompt("Bienvenido a conversor de unidades online \nElija un numero para comenzar: \n1 - Longitud \n2 - Peso \n3 - Tiempo")
-let un1 = ""
-let un2 = ""
 let unidad1 = ""
 let unidad2 = ""
 let valor = ""
@@ -33,151 +30,144 @@ const longitudes = [metros, pies, pulgadas]
 const pesos = [kilogramos, libras, onzas]
 const tiempos = [horas, minutos, segundos]
 
-//Selección variables y valor
-do switch (input) {
-    case "1":
-        seleccionLongitud ()
-        inicial(seleccionLongitud)
-        break
-    case "2":
-        seleccionPeso ()
-        inicial(seleccionPeso)
-        break
-    case "3":
-        seleccionTiempo ()
-        inicial(seleccionTiempo)
-        break
-    default:
-        alert("Elija un número válido")
-        input = prompt("Bienvenido a conversor de unidades online \nElija un numero para comenzar: \n1 - Longitud \n2 - Peso \n3 - Tiempo")
-} while (input!="1" && input!="2" && input!="3")
-
-//Funciones selección
-function seleccionLongitud () {
-    un1 = prompt("¿Qué unidad desea convertir? \n1 - Metros \n2 - Pies \n3 - Pulgadas")
-    if (un1=="1") {
-        unidad1 = longitudes.find(longitud => longitud.nombre=="Metros")
-    } else if (un1=="2") {
-        unidad1 = longitudes.find(longitud => longitud.nombre=="Pies")
+//Funciones
+function selector(e){
+    input = e.target.id
+    selector1.innerHTML=`<option value="0">Seleccione unidad inicial</option>`
+    selector2.innerHTML=`<option value="0">Seleccione unidad final</option>`
+    if (input=="long") {
+        for (const und of longitudes) {
+            selector1.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
+            selector2.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
+        }
+    } else if (input=="weig") {
+        for (const und of pesos) {
+            selector1.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
+            selector2.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
+        }
     } else {
-        unidad1 = longitudes.find(longitud => longitud.nombre=="Pulgadas")
+        for (const und of tiempos) {
+            selector1.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
+            selector2.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
+        }
     }
-    un2 = prompt("¿A qué unidad desea convertir? \n1 - Metros \n2 - Pies \n3 - Pulgadas")
-    if (un2=="1") {
-        unidad2 = longitudes.find(longitud => longitud.nombre=="Metros")
-    } else if (un2=="2") {
-        unidad2 = longitudes.find(longitud => longitud.nombre=="Pies")
-    } else {
-        unidad2 = longitudes.find(longitud => longitud.nombre=="Pulgadas")
-    }
-    if ((un1=="1" && un2=="2") || (un1=="2" && un2=="1")) {
-        coef = 3.281
-    } else if ((un1=="1" && un2=="3") || (un1=="3" && un2=="1")) {
-        coef = 39.37
-    } else {
-        coef = 12
-    }
-}
-
-function seleccionPeso () {
-    un1 = prompt("¿Qué unidad desea convertir? \n1 - Kilogramos \n2 - Libras \n3 - Onzas")
-    if (un1=="1") {
-        unidad1 = pesos.find(peso => peso.nombre=="Kilogramos")
-    } else if (un1=="2") {
-        unidad1 = pesos.find(peso => peso.nombre=="Libras")
-    } else {
-        unidad1 = pesos.find(peso => peso.nombre=="Onzas")
-    }
-    un2 = prompt("¿A qué unidad desea convertir? \n1 - Kilogramos \n2 - Libras \n3 - Onzas")
-    if (un2=="1") {
-        unidad2 = pesos.find(peso => peso.nombre=="Kilogramos")
-    } else if (un2=="2") {
-        unidad2 = pesos.find(peso => peso.nombre=="Libras")
-    } else {
-        unidad2 = pesos.find(peso => peso.nombre=="Onzas")
-    }
-    if ((un1=="1" && un2=="2") || (un1=="2" && un2=="1")) {
-        coef = 2.205
-    } else if ((un1=="1" && un2=="3") || (un1=="3" && un2=="1")) {
-        coef = 35.274
-    } else {
-        coef = 16
-    }
-}
-
-function seleccionTiempo () {
-    un1 = prompt("¿Qué unidad desea convertir? \n1 - Horas \n2 - Minutos \n3 - Segundos")
-    if (un1=="1") {
-        unidad1 = tiempos.find(tiempo => tiempo.nombre=="Horas")
-    } else if (un1=="2") {
-        unidad1 = tiempos.find(tiempo => tiempo.nombre=="Minutos")
-    } else {
-        unidad1 = tiempos.find(tiempo => tiempo.nombre=="Segundos")
-    }
-    un2 = prompt("¿A qué unidad desea convertir? \n1 - Horas \n2 - Minutos \n3 - Segundos")
-    if (un2=="1") {
-        unidad2 = tiempos.find(tiempo => tiempo.nombre=="Horas")
-    } else if (un2=="2") {
-        unidad2 = tiempos.find(tiempo => tiempo.nombre=="Minutos")
-    } else {
-        unidad2 = tiempos.find(tiempo => tiempo.nombre=="Segundos")
-    }
-    if ((un1=="1" && un2=="3") || (un1=="3" && un2=="1")) {
-        coef = 3600
-    } else {
-        coef = 60
-    }
-}
-
-function inicial (unidad) {
-    while (un1 == un2) {
-        alert("Elija unidades distintas")
-        unidad()
-    } 
-    while ((un1!="1" && un1!="2" && un1!="3") || (un2!="1" && un2!="2" && un2!="3")) {
-        alert("Elija un número válido")
-        unidad()
-    }
-    valor = parseFloat(prompt("Ingrese el valor"))
 }
 
 //Funciones conversión
 function mult (valor, coef) {
-    res = valor*coef
+    res = Math.round(valor*100*coef)/100
 }
 
 function div (valor, coef) {
     res = Math.round(valor*100/coef)/100 
 }
 
-//Lógica de conversión
-switch (input) {
-    case "1":
-    case "2":
-    case "3":
-        if (un1==1) {
-            mult(valor, coef)
-            }
-        if (un1==2) {
-            if (un2==1) {
-                div(valor, coef)
+//Eventos
+const iconos = document.querySelector("#iconos")
+const selector1 = document.querySelector("#selector1")
+const selector2 = document.querySelector("#selector2")
+const value = document.querySelector("#value")
+const parrafo = document.querySelector("#parrafo")
+const subtitulo = document.querySelector("#subtitulo")
+
+iconos.addEventListener("click", selector)  
+
+selector1.addEventListener("change", (e)=>{
+    switch (input){
+        case "long":
+            unidad1 = longitudes.find(longitud => longitud.nombre==e.target.value)
+            if ((unidad1.nombre=="Metros" && unidad2.nombre=="Pies") || (unidad1.nombre=="Pies" && unidad2.nombre=="Metros")) {
+                coef = 3.281
+            } else if ((unidad1.nombre=="Metros" && unidad2.nombre=="Pulgadas") || (unidad1.nombre=="Pulgadas" && unidad2.nombre=="Metros")) {
+                coef = 39.37
             } else {
-                mult(valor, coef)
+                coef = 12
             }
-        } 
-        if (un1==3) {
-            div(valor, coef)
-        }
-        break
-}
+            break
+        case "weig":
+            unidad1 = pesos.find(peso => peso.nombre==e.target.value)
+            if ((unidad1.nombre=="Kilogramos" && unidad2.nombre=="Libras") || (unidad1.nombre=="Libras" && unidad2.nombre=="Kilogramos")) {
+                coef = 2.205
+            } else if ((unidad1.nombre=="Kilogramos" && unidad2.nombre=="Onzas") || (unidad1.nombre=="Onzas" && unidad2.nombre=="Kilogramos")) {
+                coef = 35.274
+            } else {
+                coef = 16
+            }
+            break
+        case "time":
+            unidad1 = tiempos.find(tiempo => tiempo.nombre==e.target.value)
+            if ((unidad1.nombre=="Horas" && unidad2.nombre=="Segundos") || (unidad1.nombre=="Segundos" && unidad2.nombre=="Horas")) {
+                coef = 3600
+            } else {
+                coef = 60
+            }
+            break
+    }
+})
 
-//Uso de DOM
-let subtitulo = document.querySelector("#subtitulo")
-subtitulo.innerText = `${valor+" "+unidad1.simbolo} equivalen a ${res+" "+unidad2.simbolo}` 
+selector2.addEventListener("change", (e)=>{
+    switch (input){
+        case "long":
+            unidad2 = longitudes.find(longitud => longitud.nombre==e.target.value)
+            if ((unidad1.nombre=="Metros" && unidad2.nombre=="Pies") || (unidad1.nombre=="Pies" && unidad2.nombre=="Metros")) {
+                coef = 3.281
+            } else if ((unidad1.nombre=="Metros" && unidad2.nombre=="Pulgadas") || (unidad1.nombre=="Pulgadas" && unidad2.nombre=="Metros")) {
+                coef = 39.37
+            } else {
+                coef = 12
+            }
+            break
+        case "weig":
+            unidad2 = pesos.find(peso => peso.nombre==e.target.value)
+            if ((unidad1.nombre=="Kilogramos" && unidad2.nombre=="Libras") || (unidad1.nombre=="Libras" && unidad2.nombre=="Kilogramos")) {
+                coef = 2.205
+            } else if ((unidad1.nombre=="Kilogramos" && unidad2.nombre=="Onzas") || (unidad1.nombre=="Onzas" && unidad2.nombre=="Kilogramos")) {
+                coef = 35.274
+            } else {
+                coef = 16
+            }
+            break
+        case "time":
+            unidad2 = tiempos.find(tiempo => tiempo.nombre==e.target.value)
+            if ((unidad1.nombre=="Horas" && unidad2.nombre=="Segundos") || (unidad1.nombre=="Segundos" && unidad2.nombre=="Horas")) {
+                coef = 3600
+            } else {
+                coef = 60
+            }
+            break
+    }
+})
 
-if (unidad2.si==true) {
-    let parrafo = document.createElement("p")
-    parrafo.className = "texto"
-    parrafo.innerText = "Está convirtiendo a una unidad del Sistema Internacional"
-    document.body.append(parrafo)
-}
+value.addEventListener("input", (e)=>{
+    valor=e.target.value
+    switch (input) {
+        case "long":
+        case "weig":
+        case "time":
+            if (unidad1.nombre=="Metros" || "Kilogramos" || "Horas") {
+                mult(valor, coef)
+                break
+            }
+            if (unidad1.nombre=="Pies" || "Libras" || "Minutos") {
+                if (unidad2.nombre=="Metros" || "Kilogramos" || "Horas") {
+                    div(valor, coef)
+                    break
+                } else {
+                    mult(valor, coef)
+                    break
+                }
+            }
+            if (unidad1.nombre=="Pulgadas" || "Onzas" || "Segundos") {
+                div(valor, coef)
+                break
+            }
+            break
+    }
+    subtitulo.innerText = `${valor+" "+unidad1.simbolo} equivalen a ${res+" "+unidad2.simbolo}`
+    if (unidad1==unidad2) {
+        subtitulo.innerText = "Elija unidades distintas"
+    }
+    if (unidad2.si==true) {
+        parrafo.innerText = "Está convirtiendo a una unidad del Sistema Internacional"
+    }
+})

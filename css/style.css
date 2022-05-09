@@ -1,8 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 body {
     background-color: rgb(5, 1, 42);
 }
 
+.main__iconos {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.main__selectores {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 400px;
+}
+
+.card {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 5px 5px 10px 5px #000000;
+    background-color: #220443;
+    border: 1px solid #3C1C78;    
+}
+
 .texto {
+    font-family: 'Ubuntu', sans-serif;
     color: rgb(171, 190, 207);
     text-align: center;
+}
+
+.icono {
+    height: 200px;
+    width: 174px;
+    cursor: pointer;
+}
+
+.input__select {
+    appearance: none;
+    height: 40px;
+    width: 300px;
+    font-family: 'Ubuntu', sans-serif;
+    text-align: center;
+    display: inline-block;
+	background: #220443;
+	font-size: 1em;
+	color: rgb(234, 227, 227);
+    border: 1px solid #3C1C78;    
+    border-radius: 22px;
+    position: relative;
+    -webkit-appearance: none;
+    -moz-appearance: none;    
+    outline: none;
+    background-image: url(../images/down-arrow.png);
+    background-position: 95%;
+    background-repeat: no-repeat;
+}
+
+.input__number {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none; 
+    text-align: center;
+    height: 30px;
+    width: 250px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1em;
+    background: #d4cdff;
+    border: 1px solid #3C1C78;    
+    outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
 }

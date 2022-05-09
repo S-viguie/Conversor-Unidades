@@ -10,7 +10,29 @@
 <body>
     <main>
         <h1 class="texto">Conversor de unidades</h1>
-        <h2 class="texto" id="subtitulo"></h2>
+        <div class="main__iconos" id="iconos">
+            <div class="card">
+                <img src="./images/cinta.png" class="icono" id="long" alt="cinta metrica">
+                <h2 class="texto">Longitud</h2>
+            </div>
+            <div class="card">
+                <img src="./images/balanza.png" class="icono" id="weig" alt="balanza">
+                <h2 class="texto">Peso</h2>
+            </div>
+            <div class="card">
+                <img src="./images/reloj.png" class="icono" id="time" alt="reloj">
+                <h2 class="texto">Tiempo</h2>
+            </div>
+        </div>
+        <div class="main__selectores">
+            <select class="input__select" name="unidadInicial" id="selector1">
+            </select>
+            <input type="number" class="input__number" id="value">
+            <select class="input__select" name="unidadFinal" id="selector2">
+            </select>
+            <h2 class="texto" id="subtitulo"></h2>
+            <p class="texto" id="parrafo"></p>
+        </div>
     </main>
     <script src="./scripts/main.js"></script>
 </body>
