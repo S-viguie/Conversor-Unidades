@@ -144,22 +144,20 @@ value.addEventListener("input", (e)=>{
         case "long":
         case "weig":
         case "time":
-            if (unidad1.nombre=="Metros" || "Kilogramos" || "Horas") {
+            if (unidad1.nombre=="Metros" || unidad1.nombre=="Kilogramos" || unidad1.nombre=="Horas") {
                 mult(valor, coef)
-                break
-            }
-            if (unidad1.nombre=="Pies" || "Libras" || "Minutos") {
-                if (unidad2.nombre=="Metros" || "Kilogramos" || "Horas") {
-                    div(valor, coef)
-                    break
-                } else {
-                    mult(valor, coef)
-                    break
-                }
-            }
-            if (unidad1.nombre=="Pulgadas" || "Onzas" || "Segundos") {
+                console.log("1")
+            } else if (unidad1.nombre=="Pies" || unidad1.nombre=="Libras" || unidad1.nombre=="Minutos") {
+                    if (unidad2.nombre=="Metros" || unidad2.nombre=="Kilogramos" || unidad2.nombre=="Horas") {
+                        div(valor, coef)
+                        console.log("2")
+                    } else {
+                        mult(valor, coef)
+                        console.log("3")
+                    }
+            } else if (unidad1.nombre=="Pulgadas" || unidad1.nombre=="Onzas" || unidad1.nombre=="Segundos") {
                 div(valor, coef)
-                break
+                console.log("4")
             }
             break
     }
