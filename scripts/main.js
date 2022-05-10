@@ -24,11 +24,14 @@ let onzas = new Unidad ("Onzas", "oz", false)
 let horas = new Unidad ("Horas", "h", false)
 let minutos = new Unidad ("Minutos", "min", false)
 let segundos = new Unidad ("Segundos", "s", true)
+let celsius = new Unidad ("Celsius", "°C", true)
+let farenheite = new Unidad ("Farenheite", "°F", false)
 
 //Arrays de unidades
 const longitudes = [metros, pies, pulgadas]
 const pesos = [kilogramos, libras, onzas]
 const tiempos = [horas, minutos, segundos]
+const temperaturas = [celsius, farenheite]
 
 //Funciones
 function selector(e){
@@ -45,11 +48,50 @@ function selector(e){
             selector1.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
             selector2.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
         }
-    } else {
+    } else if (input=="time") {
         for (const und of tiempos) {
             selector1.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
             selector2.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
         }
+    } else {
+        for (const und of temperaturas) {
+            selector1.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
+            selector2.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
+        }
+    }
+}
+
+function conversor(e){
+    valor=e.target.value
+    switch (input) {
+        case "long":
+        case "weig":
+        case "time":
+            if (unidad1.nombre=="Metros" || unidad1.nombre=="Kilogramos" || unidad1.nombre=="Horas") {
+                mult(valor, coef)
+            } else if (unidad1.nombre=="Pies" || unidad1.nombre=="Libras" || unidad1.nombre=="Minutos") {
+                    if (unidad2.nombre=="Metros" || unidad2.nombre=="Kilogramos" || unidad2.nombre=="Horas") {
+                        div(valor, coef)
+                    } else {
+                        mult(valor, coef)
+                    }
+            } else if (unidad1.nombre=="Pulgadas" || unidad1.nombre=="Onzas" || unidad1.nombre=="Segundos") {
+                div(valor, coef)
+            }
+            break
+        case "temp":
+            if (unidad1.nombre=="Celsius"){
+                faren(valor)
+            } else {
+                cels(valor)
+            }
+    }
+    subtitulo.innerText = `${valor+" "+unidad1.simbolo} equivalen a ${res+" "+unidad2.simbolo}`
+    if (unidad1==unidad2) {
+        subtitulo.innerText = "Elija unidades distintas"
+    }
+    if (unidad2.si==true) {
+        parrafo.innerText = "Está convirtiendo a una unidad del Sistema Internacional"
     }
 }
 
@@ -60,6 +102,14 @@ function mult (valor, coef) {
 
 function div (valor, coef) {
     res = Math.round(valor*100/coef)/100 
+}
+
+function cels (valor) {
+    res = Math.round((valor-32)*5/9*100)/100
+}
+
+function faren (valor) {
+    res = Math.round((valor*9/5)*100)/100+32
 }
 
 //Eventos
@@ -102,6 +152,9 @@ selector1.addEventListener("change", (e)=>{
                 coef = 60
             }
             break
+        case "temp":
+            unidad1 = temperaturas.find(temperatura => temperatura.nombre==e.target.value)
+            break
     }
 })
 
@@ -135,37 +188,10 @@ selector2.addEventListener("change", (e)=>{
                 coef = 60
             }
             break
+        case "temp":
+            unidad2 = temperaturas.find(temperatura => temperatura.nombre==e.target.value)
+            break
     }
 })
 
-value.addEventListener("input", (e)=>{
-    valor=e.target.value
-    switch (input) {
-        case "long":
-        case "weig":
-        case "time":
-            if (unidad1.nombre=="Metros" || unidad1.nombre=="Kilogramos" || unidad1.nombre=="Horas") {
-                mult(valor, coef)
-                console.log("1")
-            } else if (unidad1.nombre=="Pies" || unidad1.nombre=="Libras" || unidad1.nombre=="Minutos") {
-                    if (unidad2.nombre=="Metros" || unidad2.nombre=="Kilogramos" || unidad2.nombre=="Horas") {
-                        div(valor, coef)
-                        console.log("2")
-                    } else {
-                        mult(valor, coef)
-                        console.log("3")
-                    }
-            } else if (unidad1.nombre=="Pulgadas" || unidad1.nombre=="Onzas" || unidad1.nombre=="Segundos") {
-                div(valor, coef)
-                console.log("4")
-            }
-            break
-    }
-    subtitulo.innerText = `${valor+" "+unidad1.simbolo} equivalen a ${res+" "+unidad2.simbolo}`
-    if (unidad1==unidad2) {
-        subtitulo.innerText = "Elija unidades distintas"
-    }
-    if (unidad2.si==true) {
-        parrafo.innerText = "Está convirtiendo a una unidad del Sistema Internacional"
-    }
-})
+value.addEventListener("input", conversor)
