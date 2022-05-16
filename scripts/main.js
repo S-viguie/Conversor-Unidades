@@ -32,41 +32,26 @@ const longitudes = [metros, pies, pulgadas]
 const pesos = [kilogramos, libras, onzas]
 const tiempos = [horas, minutos, segundos]
 const temperaturas = [celsius, farenheite]
+const total = [longitudes, pesos, tiempos, temperaturas]
 
 //Funciones
 function selector(e){
-    input = e.target.id
+    input = total[e.target.id]
     selector1.innerHTML=`<option value="0">Seleccione unidad inicial</option>`
     selector2.innerHTML=`<option value="0">Seleccione unidad final</option>`
-    if (input=="long") {
-        for (const und of longitudes) {
-            selector1.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
-            selector2.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
-        }
-    } else if (input=="weig") {
-        for (const und of pesos) {
-            selector1.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
-            selector2.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
-        }
-    } else if (input=="time") {
-        for (const und of tiempos) {
-            selector1.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
-            selector2.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
-        }
-    } else {
-        for (const und of temperaturas) {
-            selector1.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
-            selector2.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
-        }
+    for (const und of input) {
+        selector1.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
+        selector2.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
     }
 }
 
 function conversor(e){
     valor=e.target.value
+    localStorage.setItem("entradaValor", e.target.value)
     switch (input) {
-        case "long":
-        case "weig":
-        case "time":
+        case longitudes:
+        case pesos:
+        case tiempos:
             if (unidad1.nombre=="Metros" || unidad1.nombre=="Kilogramos" || unidad1.nombre=="Horas") {
                 mult(valor, coef)
             } else if (unidad1.nombre=="Pies" || unidad1.nombre=="Libras" || unidad1.nombre=="Minutos") {
@@ -79,7 +64,7 @@ function conversor(e){
                 div(valor, coef)
             }
             break
-        case "temp":
+        case temperaturas:
             if (unidad1.nombre=="Celsius"){
                 faren(valor)
             } else {
@@ -87,6 +72,7 @@ function conversor(e){
             }
     }
     subtitulo.innerText = `${valor+" "+unidad1.simbolo} equivalen a ${res+" "+unidad2.simbolo}`
+    localStorage.setItem("resultado", subtitulo.innerText)
     if (unidad1==unidad2) {
         subtitulo.innerText = "Elija unidades distintas"
     }
@@ -120,11 +106,11 @@ const value = document.querySelector("#value")
 const parrafo = document.querySelector("#parrafo")
 const subtitulo = document.querySelector("#subtitulo")
 
-iconos.addEventListener("click", selector)  
+iconos.addEventListener("click", selector) 
 
 selector1.addEventListener("change", (e)=>{
     switch (input){
-        case "long":
+        case longitudes:
             unidad1 = longitudes.find(longitud => longitud.nombre==e.target.value)
             if ((unidad1.nombre=="Metros" && unidad2.nombre=="Pies") || (unidad1.nombre=="Pies" && unidad2.nombre=="Metros")) {
                 coef = 3.281
@@ -134,7 +120,7 @@ selector1.addEventListener("change", (e)=>{
                 coef = 12
             }
             break
-        case "weig":
+        case pesos:
             unidad1 = pesos.find(peso => peso.nombre==e.target.value)
             if ((unidad1.nombre=="Kilogramos" && unidad2.nombre=="Libras") || (unidad1.nombre=="Libras" && unidad2.nombre=="Kilogramos")) {
                 coef = 2.205
@@ -144,7 +130,7 @@ selector1.addEventListener("change", (e)=>{
                 coef = 16
             }
             break
-        case "time":
+        case tiempos:
             unidad1 = tiempos.find(tiempo => tiempo.nombre==e.target.value)
             if ((unidad1.nombre=="Horas" && unidad2.nombre=="Segundos") || (unidad1.nombre=="Segundos" && unidad2.nombre=="Horas")) {
                 coef = 3600
@@ -152,15 +138,18 @@ selector1.addEventListener("change", (e)=>{
                 coef = 60
             }
             break
-        case "temp":
+        case temperaturas:
             unidad1 = temperaturas.find(temperatura => temperatura.nombre==e.target.value)
             break
     }
+    value.value=""
+    subtitulo.innerText=""
+    parrafo.innerText=""
 })
 
 selector2.addEventListener("change", (e)=>{
     switch (input){
-        case "long":
+        case longitudes:
             unidad2 = longitudes.find(longitud => longitud.nombre==e.target.value)
             if ((unidad1.nombre=="Metros" && unidad2.nombre=="Pies") || (unidad1.nombre=="Pies" && unidad2.nombre=="Metros")) {
                 coef = 3.281
@@ -170,7 +159,7 @@ selector2.addEventListener("change", (e)=>{
                 coef = 12
             }
             break
-        case "weig":
+        case pesos:
             unidad2 = pesos.find(peso => peso.nombre==e.target.value)
             if ((unidad1.nombre=="Kilogramos" && unidad2.nombre=="Libras") || (unidad1.nombre=="Libras" && unidad2.nombre=="Kilogramos")) {
                 coef = 2.205
@@ -180,7 +169,7 @@ selector2.addEventListener("change", (e)=>{
                 coef = 16
             }
             break
-        case "time":
+        case tiempos:
             unidad2 = tiempos.find(tiempo => tiempo.nombre==e.target.value)
             if ((unidad1.nombre=="Horas" && unidad2.nombre=="Segundos") || (unidad1.nombre=="Segundos" && unidad2.nombre=="Horas")) {
                 coef = 3600
@@ -188,10 +177,18 @@ selector2.addEventListener("change", (e)=>{
                 coef = 60
             }
             break
-        case "temp":
+        case temperaturas:
             unidad2 = temperaturas.find(temperatura => temperatura.nombre==e.target.value)
             break
     }
+    value.value=""
+    subtitulo.innerText=""
+    parrafo.innerText=""
 })
 
 value.addEventListener("input", conversor)
+
+document.addEventListener("DOMContentLoaded", ()=>{
+    value.value=localStorage.getItem("entradaValor")
+    subtitulo.innerText = localStorage.getItem("resultado")
+})
