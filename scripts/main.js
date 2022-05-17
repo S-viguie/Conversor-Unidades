@@ -81,6 +81,51 @@ function conversor(e){
     }
 }
 
+function asignacion (e) {
+    for (let i = 0; i < total.length; i+=1) {
+        n = total[i].find(longitud => longitud.nombre==e.target.value)
+        if (n!=undefined) {
+            return n
+            break
+        }
+    }
+}
+
+function coeficientes () {
+    switch (input){
+        case longitudes:
+            if ((unidad1.nombre=="Metros" && unidad2.nombre=="Pies") || (unidad1.nombre=="Pies" && unidad2.nombre=="Metros")) {
+                coef = 3.281
+            } else if ((unidad1.nombre=="Metros" && unidad2.nombre=="Pulgadas") || (unidad1.nombre=="Pulgadas" && unidad2.nombre=="Metros")) {
+                coef = 39.37
+            } else {
+                coef = 12
+            }
+            break
+        case pesos:
+            if ((unidad1.nombre=="Kilogramos" && unidad2.nombre=="Libras") || (unidad1.nombre=="Libras" && unidad2.nombre=="Kilogramos")) {
+                coef = 2.205
+            } else if ((unidad1.nombre=="Kilogramos" && unidad2.nombre=="Onzas") || (unidad1.nombre=="Onzas" && unidad2.nombre=="Kilogramos")) {
+                coef = 35.274
+            } else {
+                coef = 16
+            }
+            break
+        case tiempos:
+            if ((unidad1.nombre=="Horas" && unidad2.nombre=="Segundos") || (unidad1.nombre=="Segundos" && unidad2.nombre=="Horas")) {
+                coef = 3600
+            } else {
+                coef = 60
+            }
+            break
+        case temperaturas:
+            break
+    }
+    value.value=""
+    subtitulo.innerText=""
+    parrafo.innerText=""
+}
+
 //Funciones conversión
 function mult (valor, coef) {
     res = Math.round(valor*100*coef)/100
@@ -109,81 +154,13 @@ const subtitulo = document.querySelector("#subtitulo")
 iconos.addEventListener("click", selector) 
 
 selector1.addEventListener("change", (e)=>{
-    switch (input){
-        case longitudes:
-            unidad1 = longitudes.find(longitud => longitud.nombre==e.target.value)
-            if ((unidad1.nombre=="Metros" && unidad2.nombre=="Pies") || (unidad1.nombre=="Pies" && unidad2.nombre=="Metros")) {
-                coef = 3.281
-            } else if ((unidad1.nombre=="Metros" && unidad2.nombre=="Pulgadas") || (unidad1.nombre=="Pulgadas" && unidad2.nombre=="Metros")) {
-                coef = 39.37
-            } else {
-                coef = 12
-            }
-            break
-        case pesos:
-            unidad1 = pesos.find(peso => peso.nombre==e.target.value)
-            if ((unidad1.nombre=="Kilogramos" && unidad2.nombre=="Libras") || (unidad1.nombre=="Libras" && unidad2.nombre=="Kilogramos")) {
-                coef = 2.205
-            } else if ((unidad1.nombre=="Kilogramos" && unidad2.nombre=="Onzas") || (unidad1.nombre=="Onzas" && unidad2.nombre=="Kilogramos")) {
-                coef = 35.274
-            } else {
-                coef = 16
-            }
-            break
-        case tiempos:
-            unidad1 = tiempos.find(tiempo => tiempo.nombre==e.target.value)
-            if ((unidad1.nombre=="Horas" && unidad2.nombre=="Segundos") || (unidad1.nombre=="Segundos" && unidad2.nombre=="Horas")) {
-                coef = 3600
-            } else {
-                coef = 60
-            }
-            break
-        case temperaturas:
-            unidad1 = temperaturas.find(temperatura => temperatura.nombre==e.target.value)
-            break
-    }
-    value.value=""
-    subtitulo.innerText=""
-    parrafo.innerText=""
+    unidad1 = asignacion (e)
+    coeficientes ()
 })
 
 selector2.addEventListener("change", (e)=>{
-    switch (input){
-        case longitudes:
-            unidad2 = longitudes.find(longitud => longitud.nombre==e.target.value)
-            if ((unidad1.nombre=="Metros" && unidad2.nombre=="Pies") || (unidad1.nombre=="Pies" && unidad2.nombre=="Metros")) {
-                coef = 3.281
-            } else if ((unidad1.nombre=="Metros" && unidad2.nombre=="Pulgadas") || (unidad1.nombre=="Pulgadas" && unidad2.nombre=="Metros")) {
-                coef = 39.37
-            } else {
-                coef = 12
-            }
-            break
-        case pesos:
-            unidad2 = pesos.find(peso => peso.nombre==e.target.value)
-            if ((unidad1.nombre=="Kilogramos" && unidad2.nombre=="Libras") || (unidad1.nombre=="Libras" && unidad2.nombre=="Kilogramos")) {
-                coef = 2.205
-            } else if ((unidad1.nombre=="Kilogramos" && unidad2.nombre=="Onzas") || (unidad1.nombre=="Onzas" && unidad2.nombre=="Kilogramos")) {
-                coef = 35.274
-            } else {
-                coef = 16
-            }
-            break
-        case tiempos:
-            unidad2 = tiempos.find(tiempo => tiempo.nombre==e.target.value)
-            if ((unidad1.nombre=="Horas" && unidad2.nombre=="Segundos") || (unidad1.nombre=="Segundos" && unidad2.nombre=="Horas")) {
-                coef = 3600
-            } else {
-                coef = 60
-            }
-            break
-        case temperaturas:
-            unidad2 = temperaturas.find(temperatura => temperatura.nombre==e.target.value)
-            break
-    }
-    value.value=""
-    subtitulo.innerText=""
-    parrafo.innerText=""
+    unidad2 = asignacion (e)
+    coeficientes ()
 })
 
 value.addEventListener("input", conversor)
