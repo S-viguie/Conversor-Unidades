@@ -39,6 +39,8 @@ function selector(e){
     input = total[e.target.id]
     selector1.innerHTML=`<option value="0">Seleccione unidad inicial</option>`
     selector2.innerHTML=`<option value="0">Seleccione unidad final</option>`
+    subtitulo.innerText = ""
+    value.value=""
     for (const und of input) {
         selector1.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
         selector2.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
@@ -55,31 +57,24 @@ function conversor(e){
             if (unidad1.nombre=="Metros" || unidad1.nombre=="Kilogramos" || unidad1.nombre=="Horas") {
                 mult(valor, coef)
             } else if (unidad1.nombre=="Pies" || unidad1.nombre=="Libras" || unidad1.nombre=="Minutos") {
-                    if (unidad2.nombre=="Metros" || unidad2.nombre=="Kilogramos" || unidad2.nombre=="Horas") {
-                        div(valor, coef)
-                    } else {
-                        mult(valor, coef)
-                    }
-            } else if (unidad1.nombre=="Pulgadas" || unidad1.nombre=="Onzas" || unidad1.nombre=="Segundos") {
+                (unidad2.nombre=="Metros" || unidad2.nombre=="Kilogramos" || unidad2.nombre=="Horas") ? div(valor, coef) : mult(valor, coef)
+            } else {
                 div(valor, coef)
             }
             break
         case temperaturas:
-            if (unidad1.nombre=="Celsius"){
-                faren(valor)
-            } else {
-                cels(valor)
-            }
+            (unidad1.nombre=="Celsius") ? faren(valor) : cels(valor)
     }
-    subtitulo.innerText = `${valor+" "+unidad1.simbolo} equivalen a ${res+" "+unidad2.simbolo}`
     localStorage.setItem("resultado", subtitulo.innerText)
-    if (unidad1==unidad2) {
+    if (unidad1=="" || unidad2=="") {
+        subtitulo.innerText = ""
+    } else if (unidad1==unidad2) {
         subtitulo.innerText = "Elija unidades distintas"
+    } else {
+        subtitulo.innerText = `${valor+" "+unidad1.simbolo} equivalen a ${res+" "+unidad2.simbolo}`
     }
-    if (unidad2.si==true) {
-        parrafo.innerText = "Está convirtiendo a una unidad del Sistema Internacional"
+    unidad2.si==true && (parrafo.innerText = "Está convirtiendo a una unidad del Sistema Internacional")
     }
-}
 
 function asignacion (e) {
     for (let i = 0; i < total.length; i+=1) {
