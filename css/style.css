@@ -14,7 +14,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    height: 400px;
+    height: 500px;
     margin-top: 70px;
 }
 
@@ -69,10 +69,21 @@ body {
     height: 30px;
     width: 250px;
     font-family: 'Ubuntu', sans-serif;
-    font-size: 1em;
+    font-size: 1.1em;
+    font-weight: bold;
     background: #d4cdff;
     border: 1px solid #3C1C78;    
     outline: none;
+}
+
+.output {
+    border: 1px solid #3C1C78;
+    border-radius: 22px;
+    padding: 20px
+}
+
+.swal2-popup {
+    font-family: 'Ubuntu', sans-serif;;
 }
 
 input::-webkit-outer-spin-button,

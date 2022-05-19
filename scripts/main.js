@@ -69,11 +69,25 @@ function conversor(e){
     if (unidad1=="" || unidad2=="") {
         subtitulo.innerText = ""
     } else if (unidad1==unidad2) {
-        subtitulo.innerText = "Elija unidades distintas"
+        subtitulo.innerText = "Elija unidades distintas";
+        value.value=""
+        Swal.fire({
+            title: '¡Error!',
+            text: 'Elija unidades distintas',
+            icon: 'error',
+            confirmButtonText: 'Continuar',
+            width: "400px",
+            height: "200px",
+            background: "#d4cdff",
+            color: "black",
+            confirmButtonColor: "#3C1C78"
+            })
+    } else if (valor!=""){
+        subtitulo.innerText = `${valor+" "+unidad1.simbolo} equivalen a ${res+" "+unidad2.simbolo}`;
+        unidad2.si==true && (parrafo.innerText = "Está convirtiendo a una unidad del Sistema Internacional")
     } else {
-        subtitulo.innerText = `${valor+" "+unidad1.simbolo} equivalen a ${res+" "+unidad2.simbolo}`
+        subtitulo.innerText = ""
     }
-    unidad2.si==true && (parrafo.innerText = "Está convirtiendo a una unidad del Sistema Internacional")
     }
 
 function asignacion (e) {
