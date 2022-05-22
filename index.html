@@ -11,36 +11,42 @@
     <main>
         <h1 class="texto">Conversor de unidades</h1>
         <div class="main__iconos" id="iconos">
-            <div class="card">
+            <div class="card" id="card1">
                 <img src="./images/cinta.png" class="icono" id="0" alt="cinta metrica">
                 <h2 class="texto">Longitud</h2>
             </div>
-            <div class="card">
+            <div class="card" id="card2">
                 <img src="./images/balanza.png" class="icono" id="1" alt="balanza">
                 <h2 class="texto">Peso</h2>
             </div>
-            <div class="card">
+            <div class="card" id="card3">
                 <img src="./images/reloj.png" class="icono" id="2" alt="reloj">
                 <h2 class="texto">Tiempo</h2>
             </div>
-            <div class="card">
+            <div class="card" id="card4">
                 <img src="./images/termometro.png" class="icono" id="3" alt="termometro">
                 <h2 class="texto">Temperatura</h2>
             </div>
         </div>
         <div class="main__selectores">
-            <h2 class="texto">Convertir de:</h2>
-            <select class="input__select" name="unidadInicial" id="selector1">
-            </select>
-            <h2 class="texto">A:</h2>
-            <select class="input__select" name="unidadFinal" id="selector2">
-            </select>
+            <h2 class="texto__convertir" id="nombreInput"></h2>
+            <div class="main__fila">
+                <div class="main__column">
+                    <h2 class="texto__convertir">Convertir de:</h2>
+                    <select class="input__select" name="unidadInicial" id="selector1"></select>
+                </div>
+                <div class="main__column">
+                    <h2 class="texto__convertir">A:</h2>
+                    <select class="input__select" name="unidadFinal" id="selector2"></select>
+                </div>
+            </div>
             <input type="number" class="input__number" id="value" placeholder="Inserte valor">
             <h2 class="texto output" id="subtitulo"></h2>
             <p class="texto" id="parrafo"></p>
         </div>
     </main>
-    <script src="./scripts/main.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./scripts/anime.min.js"></script>
+    <script src="./scripts/main.js"></script>
 </body>
 </html>

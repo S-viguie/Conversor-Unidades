@@ -4,6 +4,7 @@ let unidad2 = ""
 let valor = ""
 let coef = ""
 let res = ""
+let card 
 
 //Constructor de unidades
 class Unidad {
@@ -37,6 +38,15 @@ const total = [longitudes, pesos, tiempos, temperaturas]
 //Funciones
 function selector(e){
     input = total[e.target.id]
+    nombreInput.innerText = ""
+    card!=undefined && anime({
+        targets: card,
+        scale: 1,
+        opacity: {
+            value: 1,
+            duration: 300,
+            easing: 'linear'}
+    })
     selector1.innerHTML=`<option value="0">Seleccione unidad inicial</option>`
     selector2.innerHTML=`<option value="0">Seleccione unidad final</option>`
     subtitulo.innerText = ""
@@ -45,6 +55,38 @@ function selector(e){
         selector1.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
         selector2.innerHTML+=`<option value="${und.nombre}">${und.nombre}</option>`
     }
+    card = document.querySelector(`#card${parseFloat(e.target.id)+1}`)
+    let main = document.getElementsByClassName("main__selectores")
+    anime({
+        targets: card,
+        opacity: 0,
+        scale: {value: 1.2, duration: 150},
+        easing: 'linear',
+        duration: 100,
+    })
+    anime({
+        targets: nombreInput,
+        opacity: {
+            value: [0,1],
+            duration: 50,
+            easing: 'linear',},
+        width: {
+            value: [0, 150],
+            delay: 500,
+            duration: 500,
+            easing: 'linear',
+        },
+        scale: {value: [0, 1], duration: 500, easing: 'linear',},
+        complete: function() {
+            nombreInput.innerText = (e.target.id==0? "Longitud":(e.target.id==1? "Peso":(e.target.id==2? "Tiempo":"Temperatura")))
+        }
+    })
+    anime({
+        targets: main,
+        opacity: [0, 1],
+        duration: 1000,
+        easing: "linear",
+    })
 }
 
 function conversor(e){
@@ -159,6 +201,7 @@ const selector2 = document.querySelector("#selector2")
 const value = document.querySelector("#value")
 const parrafo = document.querySelector("#parrafo")
 const subtitulo = document.querySelector("#subtitulo")
+const nombreInput = document.querySelector("#nombreInput")
 
 iconos.addEventListener("click", selector) 
 
