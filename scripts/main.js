@@ -5,6 +5,7 @@ let valor = ""
 let coef = ""
 let res = ""
 let card 
+let data
 
 //Constructor de unidades
 class Unidad {
@@ -27,17 +28,27 @@ let minutos = new Unidad ("Minutos", "min", false)
 let segundos = new Unidad ("Segundos", "s", true)
 let celsius = new Unidad ("Celsius", "°C", true)
 let farenheite = new Unidad ("Farenheite", "°F", false)
+let ars = new Unidad ("Pesos", "$", false)
+let usd = new Unidad ("Dolares", "USD", false)
 
 //Arrays de unidades
 const longitudes = [metros, pies, pulgadas]
 const pesos = [kilogramos, libras, onzas]
 const tiempos = [horas, minutos, segundos]
 const temperaturas = [celsius, farenheite]
-const total = [longitudes, pesos, tiempos, temperaturas]
+const monedas = [ars, usd]
+const total = [longitudes, pesos, tiempos, temperaturas, monedas]
 
 //Funciones
 function selector(e){
     input = total[e.target.id]
+    if (input==monedas) {
+        fetch ("https://cors-solucion.herokuapp.com/https://api-dolar-argentina.herokuapp.com/api/dolarblue")
+            .then ((resp)=>resp.json())
+                .then ((datos)=>{
+                    data = datos
+                })
+    }
     nombreInput.innerText = ""
     card!=undefined && anime({
         targets: card,
@@ -78,7 +89,7 @@ function selector(e){
         },
         scale: {value: [0, 1], duration: 500, easing: 'linear',},
         complete: function() {
-            nombreInput.innerText = (e.target.id==0? "Longitud":(e.target.id==1? "Peso":(e.target.id==2? "Tiempo":"Temperatura")))
+            nombreInput.innerText = (e.target.id==0? "Longitud":(e.target.id==1? "Peso":(e.target.id==2? "Tiempo":(e.target.id==3? "Temperatura":"Dolar"))))
         }
     })
     anime({
@@ -96,7 +107,8 @@ function conversor(e){
         case longitudes:
         case pesos:
         case tiempos:
-            if (unidad1.nombre=="Metros" || unidad1.nombre=="Kilogramos" || unidad1.nombre=="Horas") {
+        case monedas:
+            if (unidad1.nombre=="Metros" || unidad1.nombre=="Kilogramos" || unidad1.nombre=="Horas" || unidad1.nombre=="Dolares") {
                 mult(valor, coef)
             } else if (unidad1.nombre=="Pies" || unidad1.nombre=="Libras" || unidad1.nombre=="Minutos") {
                 (unidad2.nombre=="Metros" || unidad2.nombre=="Kilogramos" || unidad2.nombre=="Horas") ? div(valor, coef) : mult(valor, coef)
@@ -119,14 +131,17 @@ function conversor(e){
             icon: 'error',
             confirmButtonText: 'Continuar',
             width: "400px",
-            height: "200px",
             background: "#d4cdff",
             color: "black",
             confirmButtonColor: "#3C1C78"
             })
     } else if (valor!=""){
+        if (input==monedas){
+            subtitulo.innerText = `${unidad1.simbolo+" "+valor} equivalen a ${unidad2.simbolo+" "+res}`
+            parrafo.innerText = `Ultima actualización: ${data.fecha} GMT`
+        } else {
         subtitulo.innerText = `${valor+" "+unidad1.simbolo} equivalen a ${res+" "+unidad2.simbolo}`;
-        unidad2.si==true && (parrafo.innerText = "Está convirtiendo a una unidad del Sistema Internacional")
+        unidad2.si==true && (parrafo.innerText = "Está convirtiendo a una unidad del Sistema Internacional")}
     } else {
         subtitulo.innerText = ""
     }
@@ -170,6 +185,9 @@ function coeficientes () {
             }
             break
         case temperaturas:
+            break
+        case monedas:
+            unidad1.nombre=="Pesos" ? coef=data.venta : coef=data.compra
             break
     }
     value.value=""
