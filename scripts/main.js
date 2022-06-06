@@ -144,7 +144,7 @@ function conversor(e){
     } else if (valor!=""){
         if (input==monedas){
             subtitulo.innerText = `${unidad1.simbolo+" "+valor} equivalen a ${unidad2.simbolo+" "+res}`
-            parrafo.innerText = `Ultima actualización: ${data.fecha} GMT`
+            parrafo.innerText = `Última actualización: ${data.fecha} GMT`
         } else {
         subtitulo.innerText = `${valor+" "+unidad1.simbolo} equivalen a ${res+" "+unidad2.simbolo}`;
         unidad2.si==true && (parrafo.innerText = "Está convirtiendo a una unidad del Sistema Internacional")}
