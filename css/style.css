@@ -174,20 +174,31 @@ input[type=number] {
 
 @media only screen and (max-width: 767px) {
     .icono {
-        height: 101px;
-        width: 88px;
+        height: 60.6px;
+        width: 52.8px;
     }
     
     .card {
-        height: 160px;
+        height: 100px;
     }
     
+    .main__fila {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .input__select {
+        width: 225px;
+        font-size: 0.8em;
+    }
+
     .texto--big {
         font-size: 1.5em;
     }
     
     .texto {
-        font-size: 1em;
+        font-size: 0.8em;
     }
     
     #subtitulo {
