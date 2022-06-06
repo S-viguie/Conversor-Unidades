@@ -39,7 +39,7 @@ const temperaturas = [celsius, farenheite]
 const monedas = [ars, usd]
 const total = [longitudes, pesos, tiempos, temperaturas, monedas]
 
-//Funciones
+//Funciones generales
 function selector(e){
     input = total[e.target.id]
     if (input==monedas) {
@@ -68,6 +68,7 @@ function selector(e){
     }
     card = document.querySelector(`#card${parseFloat(e.target.id)+1}`)
     let main = document.getElementsByClassName("main__selectores")
+    let mainFila = document.getElementsByClassName("main__fila")
     anime({
         targets: card,
         opacity: 0,
@@ -98,6 +99,12 @@ function selector(e){
         duration: 1000,
         easing: "linear",
     })
+    anime({
+        targets: mainFila,
+        opacity: [0, 1],
+        duration: 1000,
+        easing: "linear",
+    })
 }
 
 function conversor(e){
@@ -119,7 +126,6 @@ function conversor(e){
         case temperaturas:
             (unidad1.nombre=="Celsius") ? faren(valor) : cels(valor)
     }
-    localStorage.setItem("resultado", subtitulo.innerText)
     if (unidad1=="" || unidad2=="") {
         subtitulo.innerText = ""
     } else if (unidad1==unidad2) {
@@ -145,7 +151,8 @@ function conversor(e){
     } else {
         subtitulo.innerText = ""
     }
-    }
+    localStorage.setItem("resultado", subtitulo.innerText)
+}
 
 function asignacion (e) {
     for (let i = 0; i < total.length; i+=1) {
