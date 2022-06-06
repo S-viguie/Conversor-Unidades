@@ -174,18 +174,23 @@ input[type=number] {
 
 @media only screen and (max-width: 767px) {
     .icono {
-        height: 60.6px;
-        width: 52.8px;
+        height: 72.72px;
+        width: 63.36px;
     }
     
     .card {
         height: 100px;
+        margin: 5px;
     }
     
     .main__fila {
         display: flex;
         flex-direction: column;
         align-items: center;
+    }
+    .main__iconos {
+        flex-wrap: wrap;
+
     }
 
     .input__select {
